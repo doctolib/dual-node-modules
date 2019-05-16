@@ -1,0 +1,36 @@
+#+TITLE: Dual node_modules
+#+AUTHOR: Victor Schubert
+#+EMAIL: victor.schubert@doctolib.com
+#+OPTIONS: toc:nil ^:nil
+
+Keep two folders containing Node.JS projects in sync, except for their
+/node_modules/ folders.
+
+** How to use?
+   #+BEGIN_SRC
+   $ dual-node-module.sh your-nodejs-project on
+   #+END_SRC
+
+   Will create a /your-nodejs-project.mirror/ directory next to your
+   /your-nodejs-project/ directory. Once you are done you should run
+   ~dual-node-module.sh your-nodejs-project off~ to undo the mounts.
+
+** How does it work?
+   On GNU/Linux, bind-mounts are used which mount a directory onto
+   another one. On Linux bind-mounts ignore mounts within the source
+   directory.
+
+   Bind-mounts do not exist on OS X so we use the /bindfs/ FUSE. It
+   has to be installed through /homebrew/ along with /osxfuse/. This
+   is automatically handled by the script, though you will need to
+   reboot for the install of /osxfuse/ to take effect.
+
+** Motivation
+   At Doctolib we sometimes need to work with a Node.JS codebase
+   designed to work on Windows. We do this using a Windows Vagrant box
+   and shared folders, one of which is the Node.JS project. Because
+   this project uses modules which include native binaries the
+   contents of /node_modules/ either works on Windows or on OS X and
+   GNU/Linux. This script lets us work on the project on both the
+   Vagrant box and our environments, with appropriate /node_modules/
+   for each.
