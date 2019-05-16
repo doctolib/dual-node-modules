@@ -17,10 +17,10 @@ esac
 make_mounts_bsd() {
 	if ! command -v bindfs >/dev/null
 	then
-		echo -e '\x1b[92;1mWill install bindfs. You will need to reboot.\x0b[0m'
+		echo -e '\x1b[92;1mWill install bindfs. You will need to reboot.\x1b[0m'
 		if brew cask install osxfuse && brew install bindfs
 		then
-			echo -e '\x1b[92;1mNow you need to reboot.\x1b'
+			echo -e '\x1b[92;1mNow you need to reboot.\x1b[0m'
 			exit
 		else
 			echo -e '\x1b[91;1mFailed to install either osxfuse or bindfs.\x1b[0m'
