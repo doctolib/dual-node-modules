@@ -27,7 +27,7 @@ make_mounts_bsd() {
 			exit 1
 		fi
 	fi
-	mkdir "$dir_original/node_modules" "$dir_mirror" "$dir_node_modules"
+	mkdir -p "$dir_original/node_modules" "$dir_mirror" "$dir_node_modules"
 	bindfs --no-allow-other "$dir_original" "$dir_mirror"
 	bindfs --no-allow-other -o allow_recursion "$dir_node_modules" "$dir_mirror/node_modules"
 }
