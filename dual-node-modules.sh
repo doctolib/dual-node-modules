@@ -38,10 +38,11 @@ make_mounts_linux() {
 	sudo mount --bind "$dir_original" "$dir_mirror" # bind mount ignores mounts in source dirtree
 }
 
-unmake_mounts_bsd() {
+unmake_mounts_bsd() (
+	set +e
 	umount "$dir_mirror/node_modules"
 	umount "$dir_mirror"
-}
+)
 
 unmake_mounts_linux() {
 	sudo umount "$dir_mirror"
@@ -58,7 +59,7 @@ usage() {
 }
 
 main() {
-	local directory="$1"
+	local directory="$1.base"
 	local cmd="$2"
 	if [[ "$#" != 2 ]]
 	then
@@ -75,8 +76,8 @@ main() {
 	fi
 	cd "$directory/.."
 	directory="$(basename "$directory")"
-	dir_original="$1"
-	dir_mirror="$dir_original.mirror"
+	dir_original="$directory"
+	dir_mirror="$1"
 	dir_node_modules=".$dir_original.node_modules"
 	case $cmd in
 		on)
