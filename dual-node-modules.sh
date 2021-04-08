@@ -40,8 +40,8 @@ make_mounts_linux() {
 
 unmake_mounts_bsd() (
 	set +e
-	umount "$dir_original/node_modules"
-	umount "$dir_mirror"
+	diskutil unmount "$dir_mirror/node_modules"
+	diskutil unmount "$dir_mirror"
 )
 
 unmake_mounts_linux() {
