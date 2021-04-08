@@ -27,7 +27,7 @@ make_mounts_bsd() {
 			exit 1
 		fi
 	fi
-	mkdir -p "$dir_original/node_modules" "$dir_mirror" "$dir_node_modules"
+	mkdir -p "$dir_mirror/node_modules" "$dir_node_modules"
 	bindfs --no-allow-other "$dir_original" "$dir_mirror"
 	bindfs --no-allow-other -o allow_recursion "$dir_node_modules" "$dir_mirror/node_modules"
 }
@@ -40,7 +40,7 @@ make_mounts_linux() {
 
 unmake_mounts_bsd() (
 	set +e
-	umount "$dir_mirror/node_modules"
+	umount "$dir_original/node_modules"
 	umount "$dir_mirror"
 )
 
@@ -59,7 +59,7 @@ usage() {
 }
 
 main() {
-	local directory="$1.base"
+	local directory="$1"
 	local cmd="$2"
 	if [[ "$#" != 2 ]]
 	then
@@ -76,8 +76,8 @@ main() {
 	fi
 	cd "$directory/.."
 	directory="$(basename "$directory")"
-	dir_original="$directory"
-	dir_mirror="$1"
+	dir_original="$1"
+	dir_mirror="$dir_original.mirror"
 	dir_node_modules=".$dir_original.node_modules"
 	case $cmd in
 		on)
